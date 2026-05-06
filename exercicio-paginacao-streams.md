@@ -77,7 +77,9 @@ public class Paginador<T> {
     public List<T> primeirosN(List<T> lista, int n) {
         // TODO: implemente usando limit
         throw new UnsupportedOperationException("Não implementado");
-        
+        return lista.stream()
+            .limit()
+            .collect(Collectors.toList());
     }
 
     /**
