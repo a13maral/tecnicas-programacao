@@ -140,6 +140,11 @@ public class CatalogoBusca {
                                           int pagina, int tamanhoPagina) {
         // TODO: implemente usando filter, skip e limit
         throw new UnsupportedOperationException("Não implementado");
+        return livros.stream()
+            .filter(livro -> livro.getTitulo().toLowerCase().contains(termo.toLowerCase()))
+            .skip(pagina * tamanhoPagina)
+            .limit(tamanhoPagina)
+            .collect(Collectors.toList());
     }
 }
 ```
