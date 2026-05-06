@@ -111,6 +111,7 @@ public class Paginador<T> {
     public int totalPaginas(List<T> lista, int tamanhoPagina) {
         // TODO: implemente
         throw new UnsupportedOperationException("Não implementado");
+        return (lista.size() + tamanhoPagina - 1) / tamanhoPagina;
     }
 }
 ```
