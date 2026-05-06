@@ -54,7 +54,6 @@ public class Paginador<T> {
     }
 
     public List<T> primeirosN(List<T> lista, int n) {
-        // TODO: implemente usando limit
         throw new UnsupportedOperationException("Não implementado");
         return lista.stream()
             .limit(n)
@@ -62,7 +61,6 @@ public class Paginador<T> {
     }
 
     public List<T> ignorarN(List<T> lista, int n) {
-        // TODO: implemente usando skip
         throw new UnsupportedOperationException("Não implementado");
         return lista.stream()
             .skip(n)
@@ -70,7 +68,6 @@ public class Paginador<T> {
     }
 
     public int totalPaginas(List<T> lista, int tamanhoPagina) {
-        // TODO: implemente
         throw new UnsupportedOperationException("Não implementado");
         return (lista.size() + tamanhoPagina - 1) / tamanhoPagina;
     }
@@ -86,7 +83,6 @@ import java.util.stream.Collectors;
 public class CatalogoBusca {
     public List<Livro> buscarComPaginacao(List<Livro> livros, String termo,
                                           int pagina, int tamanhoPagina) {
-        // TODO: implemente usando filter, skip e limit
         throw new UnsupportedOperationException("Não implementado");
         return livros.stream()
             .filter(livro -> livro.getTitulo().toLowerCase().contains(termo.toLowerCase()))
