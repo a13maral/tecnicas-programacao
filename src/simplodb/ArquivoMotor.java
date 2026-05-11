@@ -50,8 +50,12 @@ public class ArquivoMotor {
      *   Dica: use try-with-resources para fechar os streams automaticamente
      */
     public void salvar(String entidade, Long id, Object obj) throws IOException {
-        // TODO Exercício 5a
-        throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 5a");
+        Path dir = diretorioBase.resolve(entidade);
+        Files.createDirectories(dir);
+        Path caminho = resolverCaminho(entidade, id);
+        try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(caminho))) {
+            oos.writeObject(obj);
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -71,9 +75,15 @@ public class ArquivoMotor {
      *   Dica: use try-with-resources para fechar os streams automaticamente
      */
     @SuppressWarnings("unchecked")
-    public <T> Optional<T> carregar(String entidade, Long id) throws IOException, ClassNotFoundException {
-        // TODO Exercício 5b
-        throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 5b");
+    public <T> Optional<T> carregar(String entidade, Long id)
+            throws IOException, ClassNotFoundException {
+        Path caminho = resolverCaminho(entidade, id);
+        if (Files.notExists(caminho)) {
+            return Optional.empty();
+        }
+        try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(caminho))) {
+            return Optional.of((T) ois.readObject());
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -96,9 +106,31 @@ public class ArquivoMotor {
      *   7. Colete em uma List<T> com .collect(Collectors.toList())
      */
     @SuppressWarnings("unchecked")
-    public <T> List<T> carregarTodos(String entidade) throws IOException, ClassNotFoundException {
-        // TODO Exercício 4
-        throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 4");
+    public <T> List<T> carregarTodos(String entidade)
+            throws IOException, ClassNotFoundException {
+        Path dir = diretorioBase.resolve(entidade);
+        if (Files.notExists(dir)) {
+            return List.of();
+        }
+        try (var paths = Files.list(dir)) {
+            return paths
+                    .map(path -> {
+                        try {
+                            Long id = Long.parseLong(
+                                    path.getFileName()
+                                            .toString()
+                                            .replace(".dat", "")
+                            );
+                            return carregar(entidade, id);
+                        } catch (IOException | ClassNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .map(obj -> (T) obj)
+                    .toList();
+        }
     }
 
     // -------------------------------------------------------------------------
