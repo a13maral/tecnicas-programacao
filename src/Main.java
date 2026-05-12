@@ -58,7 +58,7 @@ public class Main {
         Usuario bruno  = usuarioRepo.salvar(new Usuario("Bruno Costa", "bruno@email.com", "555.666.777-88", LocalDate.now()));
         System.out.println(ana);
         System.out.println(bruno);
-         /*
+
        // ---- Empréstimos ----
         System.out.println("\n=== Registrando empréstimos ===");
         Emprestimo e1 = biblioteca.registrarEmprestimo(ana.getId(), domCasmurro.getId());
@@ -104,7 +104,5 @@ public class Main {
 
         System.out.println("\n=== Fim. Dados persistidos em db/ ===");
 
-        */
-        // Exercico 2 11/05/2026
     }
 }
