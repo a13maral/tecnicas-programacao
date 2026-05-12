@@ -105,5 +105,6 @@ public class Main {
         System.out.println("\n=== Fim. Dados persistidos em db/ ===");
 
         */
+        // Exercico 2 11/05/2026
     }
 }
