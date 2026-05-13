@@ -59,7 +59,7 @@ public class Main {
         System.out.println(ana);
         System.out.println(bruno);
 
-        // ---- Empréstimos ----
+       // ---- Empréstimos ----
         System.out.println("\n=== Registrando empréstimos ===");
         Emprestimo e1 = biblioteca.registrarEmprestimo(ana.getId(), domCasmurro.getId());
         Emprestimo e2 = biblioteca.registrarEmprestimo(ana.getId(), horaEstrela.getId());
@@ -103,5 +103,6 @@ public class Main {
         }
 
         System.out.println("\n=== Fim. Dados persistidos em db/ ===");
+
     }
 }
