@@ -53,52 +53,17 @@ public class Emprestimo implements Persistivel {
     public boolean isDevolvido() {
         return dataDevolvido != null;
     }
-
-    // -------------------------------------------------------------------------
-    // TODO Exercício 1a — Datas (Módulo 1)
-    // -------------------------------------------------------------------------
-
-    /**
-     * Retorna true se o empréstimo está atrasado.
-     *
-     * Um empréstimo está atrasado quando:
-     *   - ainda não foi devolvido (dataDevolvido == null), E
-     *   - o instante atual é posterior à dataDevolucaoPrevista
-     *
-     * Dica: use LocalDateTime.now() e o método isAfter()
-     */
+    
     public boolean estaAtrasado() {
-        // TODO Exercício 1a
         boolean passouDataEntrega = LocalDateTime.now().isAfter(dataDevolucaoPrevista);
         boolean livroNaoDevolvido = dataDevolvido == null;
 
         return livroNaoDevolvido && passouDataEntrega;
     }
 
-    // -------------------------------------------------------------------------
-    // TODO Exercício 1b — Datas (Módulo 1)
-    // -------------------------------------------------------------------------
 
-    /**
-     * Calcula a multa acumulada em reais (R$ 1,00 por dia de atraso).
-     *
-     * Regras:
-     *   - Se não estiver atrasado → retorna BigDecimal.ZERO
-     *   - Se já foi devolvido → calcula com base em dataDevolvido
-     *   - Se ainda não devolvido → calcula com base em LocalDateTime.now()
-     *
-     * Passos:
-     *   1. Se !estaAtrasado(), retorne BigDecimal.ZERO
-     *   2. Determine a data de referência:
-     *        - isDevolvido() → use dataDevolvido
-     *        - senão         → use LocalDateTime.now()
-     *   3. Calcule os dias de atraso:
-     *        long dias = ChronoUnit.DAYS.between(dataDevolucaoPrevista, referencia)
-     *   4. Retorne MULTA_POR_DIA.multiply(BigDecimal.valueOf(dias))
-     */
     public BigDecimal calcularMulta() {
-        // TODO Exercício 1b
-        //throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 1b");
+
         if (!estaAtrasado()) {
             return BigDecimal.ZERO;
         }
@@ -115,34 +80,8 @@ public class Emprestimo implements Persistivel {
         return MULTA_POR_DIA.multiply(BigDecimal.valueOf(dias));
     }
 
-    // -------------------------------------------------------------------------
-    // TODO Exercício 1c — Datas (Módulo 1)
-    // -------------------------------------------------------------------------
-
-    /**
-     * Formata um resumo legível do empréstimo.
-     *
-     * Formato esperado para empréstimo em aberto no prazo:
-     *   "Empréstimo #3 | Livro: 7 | Usuário: 2 | Vence: 20/05/2026 14:30"
-     *
-     * Formato esperado para empréstimo atrasado:
-     *   "Empréstimo #3 | Livro: 7 | Usuário: 2 | Vence: 20/05/2026 14:30 | ATRASADO | Multa: R$ 3,00"
-     *
-     * Formato esperado para empréstimo devolvido:
-     *   "Empréstimo #3 | Livro: 7 | Usuário: 2 | Vence: 20/05/2026 14:30 | Devolvido: 18/05/2026 09:00"
-     *
-     * Passos:
-     *   1. Crie um DateTimeFormatter com padrão "dd/MM/yyyy HH:mm"
-     *   2. Formate dataDevolucaoPrevista com o formatter
-     *   3. Monte a String base: "Empréstimo #" + id + " | Livro: " + livroId + ...
-     *   4. Se isDevolvido(), acrescente " | Devolvido: " + dataDevolvido formatada
-     *   5. Se estaAtrasado(), acrescente " | ATRASADO | Multa: R$ " + calcularMulta()
-     *      Dica: String.format("%.2f", calcularMulta()) formata com 2 casas decimais
-     */
     @Override
     public String toString() {
-        // TODO Exercício 1c
-        //throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 1c");
         DateTimeFormatter padraoDeFormatacao = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
         String dataDevolucaoPrevistaFormatada = dataDevolucaoPrevista.format(padraoDeFormatacao);
